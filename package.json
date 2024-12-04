@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "filerobot-image-editor": "^4.5.2",
+    "react-filerobot-image-editor": "^4.5.2"
+  }
+}
