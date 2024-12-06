@@ -411,27 +411,33 @@ canvas.on('selection:cleared', function () {
 const idInput = document.getElementById('idInput');
 let selectedObject = null;
 
-  // Handle right-click event (contextmenu) on the canvas
-  canvas.upperCanvasEl.addEventListener('contextmenu', (e) => {
-    e.preventDefault(); // Prevent the default right-click menu
+// Handle right-click event (contextmenu) on the canvas
+canvas.upperCanvasEl.addEventListener('contextmenu', (e) => {
+  e.preventDefault(); // Prevent the default right-click menu
 
-    // Get the object under the pointer
-    const pointer = canvas.getPointer(e);
-    const target = canvas.findTarget(e);
+  // Get the object under the pointer
+  const target = canvas.findTarget(e);
 
-    if (target) {
-      selectedObject = target;
+  if (target) {
+    selectedObject = target; // Set the selected object
 
-      // Show the input box at the pointer position
-      idInput.style.left = `${e.pageX}px`;
-      idInput.style.top = `${e.pageY}px`;
-      idInput.style.display = 'block';
+    // Calculate input box position, ensuring it's within the viewport
+    const inputLeft = Math.min(e.pageX, window.innerWidth - idInput.offsetWidth);
+    const inputTop = Math.min(e.pageY, window.innerHeight - idInput.offsetHeight);
 
-      // Pre-fill the input with the current ID, if available
-      idInput.value = target.id || '';
-      idInput.focus();
-    }
-  });
+    // Show and position the input box
+    idInput.style.left = `${inputLeft}px`;
+    idInput.style.top = `${inputTop}px`;
+    idInput.style.display = 'block';
+
+    // Pre-fill the input with the current ID, if available
+    idInput.value = target.id || '';
+    idInput.focus();
+  } else {
+    // Hide the input box if no object is selected
+    idInput.style.display = 'none';
+  }
+});
 
 // Save the ID when the user presses Enter
 idInput.addEventListener('keydown', (e) => {
@@ -457,6 +463,15 @@ canvas.on('mouse:down', () => {
     selectedObject = null;
   }
 });
+
+// Optional: Add a global click event to close the input box if needed
+document.addEventListener('click', (e) => {
+  if (idInput.style.display === 'block' && !idInput.contains(e.target)) {
+    idInput.style.display = 'none';
+    selectedObject = null;
+  }
+});
+
 
 // Extend Fabric.js to include custom properties (e.g., id) in serialization
 fabric.Object.prototype.toObject = (function (toObject) {
