@@ -296,6 +296,7 @@ $(document).ready(function() {
             function() {
                 canvas.renderAll();
                 console.log("Template loaded successfully!");
+                setUserData();
             },
             function(objectData, object) {
                 console.log("Processing object:", objectData);

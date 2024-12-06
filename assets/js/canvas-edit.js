@@ -1,11 +1,7 @@
-
-
 // Initialize Fabric.js canvas
 const canvas = new fabric.Canvas('canvas', {
-  preserveObjectStacking: true
+  preserveObjectStacking: true,
 });
-
-
 
 // Define reusable shapes configuration
 const shapeDefinitions = {
@@ -98,9 +94,6 @@ $('.btn-shape').on('click', function () {
   }
 });
 
-
-
-
 // Add Text Button
 document.getElementById('add-text').addEventListener('click', function () {
   const text = new fabric.Textbox('Edit me!', {
@@ -109,7 +102,7 @@ document.getElementById('add-text').addEventListener('click', function () {
     fontSize: 24,
     fill: '#000',
     fontFamily: 'Arial',
-    textAlign: 'left'
+    textAlign: 'left',
   });
   canvas.add(text);
   canvas.setActiveObject(text);
@@ -129,19 +122,22 @@ document.getElementById('upload-image').addEventListener('change', function (e) 
 });
 
 // Change Object Color
-// document.getElementById('object-color').addEventListener('input', function () {
-//   const activeObject = canvas.getActiveObject();
-//   if (activeObject) {
-//     activeObject.set('fill', this.value);
-//     canvas.renderAll();
-//   }
-// });
 $(document).on('input', '.object-color-input', function () {
   const activeObject = canvas.getActiveObject();
   if (activeObject) {
     activeObject.set('fill', this.value);
     canvas.renderAll();
   }
+});
+
+document.getElementById('align-left').addEventListener('click', function () {
+  updateTextProperty('textAlign', 'left')
+});
+document.getElementById('align-center').addEventListener('click', function () {
+  updateTextProperty('textAlign', 'center')
+});
+document.getElementById('align-right').addEventListener('click', function () {
+  updateTextProperty('textAlign', 'right')
 });
 
 // Update Font Properties for Text Objects
@@ -153,47 +149,25 @@ function updateTextProperty(property, value) {
   }
 }
 
-// Load the selected font using WebFontLoader and apply it
+// Load and Apply Font
 document.getElementById('font-select').addEventListener('change', function () {
-  var selectedFont = this.value;
+  const selectedFont = this.value;
 
-  // Load the selected font using WebFontLoader
   WebFont.load({
-    google: {
-      families: [selectedFont] // Load the selected font from Google Fonts
-    },
-    active: function () {
-      // Apply the font to the active textbox
-      updateTextProperty('fontFamily', selectedFont);
-    }
+    google: { families: [selectedFont] },
+    active: () => updateTextProperty('fontFamily', selectedFont),
   });
 });
+
 document.getElementById('font-size').addEventListener('input', function () {
   updateTextProperty('fontSize', parseInt(this.value, 10));
 });
-
-// Load Template
-// document.querySelectorAll('.btn-load-template').forEach(image => {
-//   image.addEventListener('click', function () {
-//     const templateId = this.getAttribute('data-id');
-//     const selectedTemplate = templates[templateId - 1];
-
-//     if (!localStorage.getItem('business_name')) {
-//       profileModal.show();
-//     } else {
-//       canvas.loadFromJSON(selectedTemplate, updateData);
-//     }
-//   });
-// });
 
 // Export Image
 document.getElementById('export-image').addEventListener('click', function () {
   const format = 'png';
   const scale = 4;
-  const dataURL = canvas.toDataURL({
-    format: format,
-    multiplier: scale
-  });
+  const dataURL = canvas.toDataURL({ format, multiplier: scale });
 
   const link = document.createElement('a');
   link.href = dataURL;
@@ -201,141 +175,101 @@ document.getElementById('export-image').addEventListener('click', function () {
   link.click();
 });
 
-// Load User Data from LocalStorage
-const userData = {
-  business_name: localStorage.getItem('business_name'),
-  phone_no: localStorage.getItem('mobile_no'),
-  address: localStorage.getItem('address'),
-  appLogo: localStorage.getItem('logo')
-};
-
-if (userData.business_name) {
-  document.getElementById('business_name').value = userData.business_name;
-  document.getElementById('mobile_no').value = userData.phone_no;
-  document.getElementById('address').value = userData.address;
-}
-
-// Update Canvas with User Data
-function updateData() {
-  const updateObject = (id, value) => {
-    const obj = canvas.getObjects().find(obj => obj.id === id);
-    if (obj) obj.set('text', value);
-  };
-
-  updateObject('phone_no', userData.phone_no);
-  updateObject('business_name', userData.business_name);
-
-  const appLogo = canvas.getObjects().find(obj => obj.id === 'appLogo');
-  if (appLogo && userData.appLogo) {
-    fabric.Image.fromURL(userData.appLogo, function (img) {
-      img.set({ height: 60, width: 60 });
-      appLogo.setElement(img.getElement());
-      canvas.renderAll();
-    });
-  } else {
-    canvas.renderAll();
-  }
-}
-
-
-
-
-
 // liyer management 
 let draggedLayerIndex = null; // To store the index of the dragged item 
 function updateLayerPanel() {
-  const layerList = document.getElementById('layer-list');
-  layerList.innerHTML = ''; // Clear the current list
+const layerList = document.getElementById('layer-list');
+layerList.innerHTML = ''; // Clear the current list
 
-  console.log('select elemenent')
-  canvas.getObjects().forEach((obj, index) => {
-    const layerItem = document.createElement('div');
-    layerItem.className = 'layer-item';
-    layerItem.draggable = true; // Make the item draggable
-    layerItem.setAttribute('data-index', index); // Store index in data attribute
+console.log('select elemenent')
+canvas.getObjects().forEach((obj, index) => {
+  const layerItem = document.createElement('div');
+  layerItem.className = 'layer-item';
+  layerItem.draggable = true; // Make the item draggable
+  layerItem.setAttribute('data-index', index); // Store index in data attribute
 
-    // Create an img element for the thumbnail
-    const thumbnail = new Image();
-    thumbnail.src = obj.toDataURL(); // Get thumbnail as data URL
-    thumbnail.alt = obj.type; // Alternative text for the image
-    thumbnail.style.height = "40px";
-    thumbnail.style.maxWidth = "100px";
-    thumbnail.style.margin = "5px auto";
-    thumbnail.style.display = "block";
-
-
-
-    layerItem.appendChild(thumbnail); // Append thumbnail to layer item
-    layerItem.innerHTML += `${obj.type}`; // Add layer type text after thumbnail
+  // Create an img element for the thumbnail
+  const thumbnail = new Image();
+  thumbnail.src = obj.toDataURL(); // Get thumbnail as data URL
+  thumbnail.alt = obj.type; // Alternative text for the image
+  thumbnail.style.height = "40px";
+  thumbnail.style.maxWidth = "100px";
+  thumbnail.style.margin = "5px auto";
+  thumbnail.style.display = "block";
 
 
-    // layerItem.innerHTML = `${index + 1}: ${obj.type}`;
 
-    // Highlight selected object
-    if (obj === canvas.getActiveObject()) {
-      layerItem.classList.add('selected-layer');
-    }
+  layerItem.appendChild(thumbnail); // Append thumbnail to layer item
+  layerItem.innerHTML += `${obj.type}`; // Add layer type text after thumbnail
 
-    // Drag events for drag-and-drop reordering
-    layerItem.addEventListener('dragstart', handleDragStart);
-    layerItem.addEventListener('dragover', handleDragOver);
-    layerItem.addEventListener('drop', handleDrop);
-    layerItem.addEventListener('dragend', handleDragEnd);
 
-    // Click event to select object from layer panel
-    layerItem.addEventListener('click', function () {
-      canvas.setActiveObject(obj);
-      canvas.renderAll();
-      updateLayerPanel(); // Update the panel after selection
-    });
+  // layerItem.innerHTML = `${index + 1}: ${obj.type}`;
 
-    layerList.appendChild(layerItem);
+  // Highlight selected object
+  if (obj === canvas.getActiveObject()) {
+    layerItem.classList.add('selected-layer');
+  }
+
+  // Drag events for drag-and-drop reordering
+  layerItem.addEventListener('dragstart', handleDragStart);
+  layerItem.addEventListener('dragover', handleDragOver);
+  layerItem.addEventListener('drop', handleDrop);
+  layerItem.addEventListener('dragend', handleDragEnd);
+
+  // Click event to select object from layer panel
+  layerItem.addEventListener('click', function () {
+    canvas.setActiveObject(obj);
+    canvas.renderAll();
+    updateLayerPanel(); // Update the panel after selection
   });
+
+  layerList.appendChild(layerItem);
+});
 }
 
 // Drag and Drop Handlers
 
 function handleDragStart(event) {
-  draggedLayerIndex = event.target.getAttribute('data-index');
-  event.target.classList.add('dragging');
+draggedLayerIndex = event.target.getAttribute('data-index');
+event.target.classList.add('dragging');
 }
 
 function handleDragOver(event) {
-  event.preventDefault(); // Allow drop
-  event.target.classList.add('drag-over');
+event.preventDefault(); // Allow drop
+event.target.classList.add('drag-over');
 }
 
 function handleDrop(event) {
-  event.preventDefault();
-  const targetLayerIndex = event.target.getAttribute('data-index');
+event.preventDefault();
+const targetLayerIndex = event.target.getAttribute('data-index');
 
-  if (draggedLayerIndex !== null && targetLayerIndex !== null && draggedLayerIndex !== targetLayerIndex) {
-    reorderLayers(draggedLayerIndex, targetLayerIndex);
-  }
+if (draggedLayerIndex !== null && targetLayerIndex !== null && draggedLayerIndex !== targetLayerIndex) {
+  reorderLayers(draggedLayerIndex, targetLayerIndex);
+}
 
-  event.target.classList.remove('drag-over');
+event.target.classList.remove('drag-over');
 }
 
 function handleDragEnd(event) {
-  event.target.classList.remove('dragging');
+event.target.classList.remove('dragging');
 }
 
 // Reorder layers on canvas based on drag-and-drop
 function reorderLayers(draggedIndex, targetIndex) {
-  const objects = canvas.getObjects();
-  const draggedObject = objects[draggedIndex];
+const objects = canvas.getObjects();
+const draggedObject = objects[draggedIndex];
 
-  // Remove dragged object and reinsert it at the new position
-  objects.splice(draggedIndex, 1);
-  objects.splice(targetIndex, 0, draggedObject);
+// Remove dragged object and reinsert it at the new position
+objects.splice(draggedIndex, 1);
+objects.splice(targetIndex, 0, draggedObject);
 
-  // Re-render canvas with reordered objects
-  canvas.clear();
-  objects.forEach(obj => canvas.add(obj));
-  canvas.renderAll();
+// Re-render canvas with reordered objects
+canvas.clear();
+objects.forEach(obj => canvas.add(obj));
+canvas.renderAll();
 
-  // Update layer panel after reordering
-  updateLayerPanel();
+// Update layer panel after reordering
+updateLayerPanel();
 }
 
 // Update layer panel when object is selected
@@ -350,78 +284,38 @@ canvas.on('object:added', updateLayerPanel);
 // Clear selection when canvas is clicked
 canvas.on('selection:cleared', updateLayerPanel);
 
-
-document.getElementById('align-left').addEventListener('click', function () {
-  updateTextProperty('textAlign', 'left')
-});
-document.getElementById('align-center').addEventListener('click', function () {
-  updateTextProperty('textAlign', 'center')
-});
-document.getElementById('align-right').addEventListener('click', function () {
-  updateTextProperty('textAlign', 'right')
-});
-
-
-
-// delete leyer feature 
-function deleteSelectedObject() {
-  const activeObject = canvas.getActiveObject();
-  if (activeObject) {
-    canvas.remove(activeObject);
-  }
-}
-
+// Delete Selected Object
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Delete') {
-    deleteSelectedObject();
+    const activeObject = canvas.getActiveObject();
+    if (activeObject) canvas.remove(activeObject);
   }
 });
 
-// load selected object color in color pickcer  
-canvas.on('selection:created', function (event) {
-  const selectedObject = event.selected[0];
-  console.log(selectedObject)
-  if (selectedObject.fill) {
-    $('.object-color-input').val(selectedObject.fill);
-    console.log('object color0', selectedObject.fill);
-  }
-});
+// Extend Fabric.js to include custom properties
+fabric.Object.prototype.toObject = (function (toObject) {
+  return function (propertiesToInclude) {
+    return fabric.util.object.extend(toObject.call(this, propertiesToInclude), {
+      id: this.id || null,
+    });
+  };
+})(fabric.Object.prototype.toObject);
 
-// Update when another object is selected
-canvas.on('selection:updated', function (event) {
-  const selectedObject = event.selected[0];
-  console.log(selectedObject)
-  if (selectedObject.fill) {
-    $('.object-color-input').val(selectedObject.fill);
-    console.log('object color0', selectedObject.fill);
-  }
-});
-
-// Handle deselection
-canvas.on('selection:cleared', function () {
-  console.log(selectedObject)
-  if (selectedObject.fill) {
-    $('.object-color-input').val(selectedObject.fill);
-    console.log('object color0', selectedObject.fill);
-  }
-});
-
-
-// Create an input element for ID editing
+// Reference the input element for editing object IDs
 const idInput = document.getElementById('idInput');
 let selectedObject = null;
 
-// Handle right-click event (contextmenu) on the canvas
+// Add context menu event listener to the canvas
 canvas.upperCanvasEl.addEventListener('contextmenu', (e) => {
-  e.preventDefault(); // Prevent the default right-click menu
+  e.preventDefault(); // Prevent the default browser context menu
 
-  // Get the object under the pointer
+  // Find the object under the pointer
   const target = canvas.findTarget(e);
 
   if (target) {
     selectedObject = target; // Set the selected object
 
-    // Calculate input box position, ensuring it's within the viewport
+    // Position the input box near the right-click location
     const inputLeft = Math.min(e.pageX, window.innerWidth - idInput.offsetWidth);
     const inputTop = Math.min(e.pageY, window.innerHeight - idInput.offsetHeight);
 
@@ -430,7 +324,7 @@ canvas.upperCanvasEl.addEventListener('contextmenu', (e) => {
     idInput.style.top = `${inputTop}px`;
     idInput.style.display = 'block';
 
-    // Pre-fill the input with the current ID, if available
+    // Pre-fill the input with the current ID
     idInput.value = target.id || '';
     idInput.focus();
   } else {
@@ -439,32 +333,20 @@ canvas.upperCanvasEl.addEventListener('contextmenu', (e) => {
   }
 });
 
-// Save the ID when the user presses Enter
+// Save the ID when pressing Enter
 idInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && selectedObject) {
-    // Set the ID on the selected object
-    selectedObject.set('id', idInput.value);
+    selectedObject.set('id', idInput.value); // Set the ID
     console.log(`Object ID updated: ${selectedObject.id}`);
 
-    // Hide the input box
-    idInput.style.display = 'none';
+    idInput.style.display = 'none'; // Hide the input box
     idInput.value = '';
     selectedObject = null;
-
-    // Re-render the canvas
-    canvas.renderAll();
+    canvas.renderAll(); // Re-render the canvas
   }
 });
 
 // Hide the input box when clicking outside
-canvas.on('mouse:down', () => {
-  if (idInput.style.display === 'block') {
-    idInput.style.display = 'none';
-    selectedObject = null;
-  }
-});
-
-// Optional: Add a global click event to close the input box if needed
 document.addEventListener('click', (e) => {
   if (idInput.style.display === 'block' && !idInput.contains(e.target)) {
     idInput.style.display = 'none';
@@ -473,15 +355,81 @@ document.addEventListener('click', (e) => {
 });
 
 
-// Extend Fabric.js to include custom properties (e.g., id) in serialization
-fabric.Object.prototype.toObject = (function (toObject) {
-  return function (propertiesToInclude) {
-    // Call the original `toObject` method
-    const originalObject = toObject.call(this, propertiesToInclude);
+// Load User Data from LocalStorage
+const userData = {
+  business_name: localStorage.getItem('business_name') || "Jagdamba Infotech",
+  phone_no: localStorage.getItem('mobile_no') || "9168585280",
+  address: localStorage.getItem('address') || "At post Chitegaon",
+  appLogo: localStorage.getItem('logo')
+};
 
-    // Add custom properties while preserving existing ones
-    return fabric.util.object.extend(originalObject, {
-      id: this.id || null, // Include the custom `id` property
-    });
+// if (userData.business_name) {
+//   document.getElementById('business_name').value = userData.business_name;
+//   document.getElementById('mobile_no').value = userData.phone_no;
+//   document.getElementById('address').value = userData.address;
+// }
+
+// Update Canvas with User Data
+function setUserData() {
+  const updateObject = (id, value) => {
+    const obj = canvas.getObjects().find(obj => obj.id === id);
+    if (obj) obj.set('text', value);
   };
-})(fabric.Object.prototype.toObject);
+
+  updateObject('phone_no', userData.phone_no);
+  updateObject('business_name', userData.business_name);
+  updateObject('address', userData.address);
+
+
+  const appLogo = canvas.getObjects().find(obj => obj.id === 'appLogo');
+  if (appLogo && userData.appLogo) {
+    fabric.Image.fromURL(userData.appLogo, function (img) {
+      img.set({ height: 60, width: 60 });
+      appLogo.setElement(img.getElement());
+      canvas.renderAll();
+    });
+  } else {
+    canvas.renderAll();
+  }
+}
+
+
+// Profile Form Submission
+// document.getElementById('profileForm').addEventListener('submit', function (e) {
+//   e.preventDefault();
+//   const formData = new FormData(this);
+//   const logo = formData.get('logo');
+
+//   if (logo && logo.type.startsWith('image/')) {
+//     const reader = new FileReader();
+//     reader.onloadend = function () {
+//       localStorage.setItem('logo', reader.result);
+//       document.getElementById('logoPreview').src = reader.result;
+//     };
+//     reader.readAsDataURL(logo);
+//   }
+
+//   localStorage.setItem('business_name', formData.get('business_name'));
+//   localStorage.setItem('mobile_no', formData.get('mobile_no'));
+//   localStorage.setItem('address', formData.get('address'));
+
+//   if (confirm('Data saved to local storage! Would you like to proceed?')) {
+//     location.reload();
+//   } else {
+//     alert('You chose not to proceed.');
+//   }
+// });
+
+fabric.util.loadFonts = function (canvas) {
+  canvas.getObjects().forEach(obj => {
+    if (obj.type === 'textbox' && obj.fontFamily) {
+      const fontFamily = obj.fontFamily;
+      obj.fontFamily = ''; // Reset font to force re-rendering
+      obj.fontFamily = fontFamily;
+    }
+  });
+  canvas.renderAll();
+};
+
+// Example: Call after font is loaded
+fabric.util.loadFonts(canvas);
