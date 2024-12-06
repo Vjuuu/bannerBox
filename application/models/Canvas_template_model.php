@@ -40,6 +40,20 @@ class Canvas_template_model extends CI_Model
 
     }
 
+    public function delete_template($id)
+    {
+          if(empty($id))
+          {
+            return false;
+          }
+          else
+          {
+            $this->db->where('id',$id);
+            $query = $this->db->delete('canvas_templates');
+            return $query;
+          }
+    }
+
     
 }
 

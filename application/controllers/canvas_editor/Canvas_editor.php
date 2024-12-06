@@ -102,6 +102,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
              
     }
+
+    public function delete_template($id)
+    {
+        $result = $this->canvas_template_model->delete_template($id);
+        if($result)
+        {
+            echo json_encode(["status" =>"success","message" => "Template Deleted Successfully..." ]);
+        }
+        else
+        {
+            echo json_encode(["status"=>"failed","message"=>"Failed To Delete Template...!"]);
+        }
+
+    }
     
  }
 ?>

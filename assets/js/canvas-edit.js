@@ -411,27 +411,27 @@ canvas.on('selection:cleared', function () {
 const idInput = document.getElementById('idInput');
 let selectedObject = null;
 
-// Handle right-click event (contextmenu) on the canvas
-canvas.upperCanvasEl.addEventListener('contextmenu', (e) => {
-  e.preventDefault(); // Prevent the default right-click menu
+  // Handle right-click event (contextmenu) on the canvas
+  canvas.upperCanvasEl.addEventListener('contextmenu', (e) => {
+    e.preventDefault(); // Prevent the default right-click menu
 
-  // Get the object under the pointer
-  const pointer = canvas.getPointer(e);
-  const target = canvas.findTarget(e);
+    // Get the object under the pointer
+    const pointer = canvas.getPointer(e);
+    const target = canvas.findTarget(e);
 
-  if (target) {
-    selectedObject = target;
+    if (target) {
+      selectedObject = target;
 
-    // Show the input box at the pointer position
-    idInput.style.left = `${e.pageX}px`;
-    idInput.style.top = `${e.pageY}px`;
-    idInput.style.display = 'block';
+      // Show the input box at the pointer position
+      idInput.style.left = `${e.pageX}px`;
+      idInput.style.top = `${e.pageY}px`;
+      idInput.style.display = 'block';
 
-    // Pre-fill the input with the current ID, if available
-    idInput.value = target.id || '';
-    idInput.focus();
-  }
-});
+      // Pre-fill the input with the current ID, if available
+      idInput.value = target.id || '';
+      idInput.focus();
+    }
+  });
 
 // Save the ID when the user presses Enter
 idInput.addEventListener('keydown', (e) => {
@@ -460,9 +460,13 @@ canvas.on('mouse:down', () => {
 
 // Extend Fabric.js to include custom properties (e.g., id) in serialization
 fabric.Object.prototype.toObject = (function (toObject) {
-  return function () {
-      return fabric.util.object.extend(toObject.call(this), {
-          id: this.id || null, // Include the custom `id` property
-      });
+  return function (propertiesToInclude) {
+    // Call the original `toObject` method
+    const originalObject = toObject.call(this, propertiesToInclude);
+
+    // Add custom properties while preserving existing ones
+    return fabric.util.object.extend(originalObject, {
+      id: this.id || null, // Include the custom `id` property
+    });
   };
 })(fabric.Object.prototype.toObject);

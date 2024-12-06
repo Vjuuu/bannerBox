@@ -1,11 +1,12 @@
 <?php include VIEWPATH .'./canvas_editor/component/header.php';?>
 <style>
-    #idInput {
-      position: absolute;
-      display: none;
-      z-index: 1000;
-    }
+#idInput {
+    position: absolute;
+    display: none;
+    z-index: 1000;
+}
 </style>
+
 <body style="background-color: rgb(46, 45, 45);">
     <div class="wrapper">
         <header>
@@ -18,9 +19,9 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                         <div class="form-group">
-                         <input class="form-control me-2 object-color-input p-0" type="color" style="width:100px">
-                         </div>
+                        <div class="form-group">
+                            <input class="form-control me-2 object-color-input p-0" type="color" style="width:100px">
+                        </div>
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item">
                                 <button class="btn btn-light me-2"><i class="bi bi-arrow-90deg-left"></i></button>
@@ -237,6 +238,7 @@ $(document).ready(function() {
     // save template 
 
 
+
     $('#frmTemplate').on('submit', function(e) {
         e.preventDefault();
         const canvasData = JSON.stringify(canvas.toJSON());
@@ -270,7 +272,8 @@ $(document).ready(function() {
                 }).showToast();
 
                 setTimeout(() => {
-                    window.location.href="<?=base_url()?>admin/canvas-all-templates";
+                    window.location.href =
+                        "<?=base_url()?>admin/canvas-all-templates";
                 }, 3000);
 
             },
@@ -280,8 +283,9 @@ $(document).ready(function() {
         })
     })
 
-   // Load template
-   <?php if (isset($template)) { ?>
+    // Load template
+    <?php if (isset($template)) { ?>
+
     const templateJSON = <?= json_encode($template[0]->template_json); ?>;
 
     try {
@@ -289,20 +293,31 @@ $(document).ready(function() {
 
         canvas.loadFromJSON(
             templateJSON,
-            function () {
+            function() {
                 canvas.renderAll();
                 console.log("Template loaded successfully!");
             },
-            function (obj, object) {
-                console.log("Loaded object:", object);
+            function(objectData, object) {
+                console.log("Processing object:", objectData);
+                console.log("Created object:", object);
             }
         );
     } catch (error) {
-        console.error("Error during loadFromJSON:", error);
+        console.error("Error during loadFromJSON:", error.message); // Log specific error
+        console.error(error.stack); // Log stack trace for deeper debugging
     }
-<?php } else { ?>
+
+    try {
+        const parsedJSON = JSON.parse(templateJSON);
+        console.log("JSON is valid:", parsedJSON);
+    } catch (parseError) {
+        console.error("JSON is invalid:", parseError.message);
+    }
+
+
+    <?php } else { ?>
     console.log("No template to load.");
-<?php } ?>
+    <?php } ?>
 
 })
 </script>
