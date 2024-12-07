@@ -84,7 +84,7 @@ $route['signup'] = 'app/signup';
 $route['login'] = 'app/login';
 $route['add-business-data'] = 'app/add_business_details';
 
-$route['dashboard'] = 'app/index';
+$route['home'] = 'app/index';
 $route['view-poster/(:num)'] = 'app/view_poster/$1';
 
 // error_pages 

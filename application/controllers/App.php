@@ -21,7 +21,7 @@ class App extends CI_Controller {
 
 	 public function __construct() {
         parent::__construct();
-        $this->load->model('Template_model');
+        $this->load->model('Canvas_template_model');
 		$this->load->model('User_model');
         $this->load->library('form_validation');
 		$this->load->library('CorsMiddleware');
@@ -29,10 +29,8 @@ class App extends CI_Controller {
     }
 	public function index()
 	{
-        $data['templates'] = $this->Template_model->get_all_templates();
-		$data['user_data'] = $this->User_model->getUserById(1);
-		$this->load->view('components/header',$data);
-		$this->load->view('home_page',$data);
+		$data['templates'] = $this->Canvas_template_model->get_template();
+        $this->load->view('Users/Pages/Home',$data);
 	}
 	public function landing_screen()
 	{
@@ -40,10 +38,10 @@ class App extends CI_Controller {
 	}
 	public function view_poster($id)
 	{
-		$data['result'] =  $this->Template_model->get_template_by_id($id);
-        if($data['result'])
+		$data['template'] =  $this->Canvas_template_model->get_template($id);
+        if($data['template'])
         {
-           $this->load->view('view_poster',$data);
+           $this->load->view('canvas_editor/Canvas_editor',$data);
         }
         else
         {
