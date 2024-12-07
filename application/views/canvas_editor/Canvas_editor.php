@@ -201,23 +201,17 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="">Template Name</label>
                             <input type="text" class="form-control" name="name" id="name"
                                 value="<?=(isset($template)) ? $template[0]->template_name : '';?>">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-2">
                             <label for="">Category</label>
                             <select name="category" id="category" class="form-select">
-                                <option
-                                    <?=(isset($template) && $template[0]->category === 'Festivals') ? 'selected' : ''; ?>>
-                                    Festivals</option>
-                                <option
-                                    <?=(isset($template) && $template[0]->category == 'Birthdays') ? 'selected' : '';?>>
-                                    Birthdays</option>
-                                <option
-                                    <?=(isset($template) && $template[0]->category == 'Discounts') ? 'selected' : '';?>>
-                                    Discounts</option>
+                                <?php foreach($categories as $category){?>
+                                   <option value="<?=$category->id?>"><?=$category->category_name;?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>

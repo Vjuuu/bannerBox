@@ -69,7 +69,6 @@ $route['admin/delete-template/(:num)'] = 'admin/template/delete_template/$1';
 // canvas template 
 $route['admin/canvas-all-templates'] = 'canvas_editor/canvas_editor/get_template';
 $route['admin/view-canvas-template/(:num)'] = 'canvas_editor/canvas_editor/view_template/$1';
-
 $route['admin/add_canvas_template'] = 'canvas_editor/canvas_editor/index';
 $route['admin/save_canvas_template'] = 'canvas_editor/canvas_editor/save_template';
 $route['admin/edit_canvas_template/(:num)'] = 'canvas_editor/canvas_editor/update_template/$1';

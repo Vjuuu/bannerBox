@@ -13,8 +13,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     public function Index()
     {
-        
-        $this->load->view('canvas_editor/canvas_editor');    
+        $this->load->model('Category_model');
+        $data['categories'] = $this->Category_model->get_categories();
+        $this->load->view('canvas_editor/canvas_editor',$data);    
     }
 
 
@@ -26,8 +27,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
     public function view_template($id)
     {
+        $this->load->model('Category_model');
+        $data['categories'] = $this->Category_model->get_categories();
         $data['template'] = $this->canvas_template_model->get_template($id);
-        
         $this->load->view('canvas_editor/canvas_editor',$data);
     }
 
