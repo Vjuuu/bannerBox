@@ -18,7 +18,7 @@ include VIEWPATH .'./admin/components/sidebar.php';
                 <div class="card card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4>Template</h4>
-                        <a href="<?=base_url()?>add_canvas_template" class="btn btn-sm btn-primary">Add New</a>
+                        <a href="<?=base_url()?>admin/add_canvas_template" class="btn btn-sm btn-primary">Add New</a>
                     </div>
                 </div>
             </div>

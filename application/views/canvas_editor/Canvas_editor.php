@@ -246,7 +246,7 @@ $(document).ready(function() {
         const category = $('#category').val();
         const templateThumbnail = canvas.toDataURL();
         $.ajax({
-            url: '<?=base_url()?><?=(isset($template)? 'edit_canvas_template/'.$template[0]->id: 'save_canvas_template')?>',
+            url: '<?=base_url()?><?=(isset($template)? 'admin/edit_canvas_template/'.$template[0]->id: 'admin/save_canvas_template')?>',
             type: 'POST',
             data: JSON.stringify({
                 canvasData: canvasData,
