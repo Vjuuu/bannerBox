@@ -128,7 +128,7 @@
     signupModal.hide()
     $('.page-container').append(`<div class="app-loader "> <img src="<?=base_url().'assets/images/project_img/app-loader.gif';?>" alt=""></div>`);
      setTimeout(() => {
-        window.location.href="<?=base_url().'dashboard'?>";
+        window.location.href="<?=base_url().'home'?>";
         
      }, 5000);
 

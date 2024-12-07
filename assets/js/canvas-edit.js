@@ -178,98 +178,98 @@ document.getElementById('export-image').addEventListener('click', function () {
 // liyer management 
 let draggedLayerIndex = null; // To store the index of the dragged item 
 function updateLayerPanel() {
-const layerList = document.getElementById('layer-list');
-layerList.innerHTML = ''; // Clear the current list
-
-console.log('select elemenent')
-canvas.getObjects().forEach((obj, index) => {
-  const layerItem = document.createElement('div');
-  layerItem.className = 'layer-item';
-  layerItem.draggable = true; // Make the item draggable
-  layerItem.setAttribute('data-index', index); // Store index in data attribute
-
-  // Create an img element for the thumbnail
-  const thumbnail = new Image();
-  thumbnail.src = obj.toDataURL(); // Get thumbnail as data URL
-  thumbnail.alt = obj.type; // Alternative text for the image
-  thumbnail.style.height = "40px";
-  thumbnail.style.maxWidth = "100px";
-  thumbnail.style.margin = "5px auto";
-  thumbnail.style.display = "block";
+  const layerList = document.getElementById('layer-list');
+  layerList.innerHTML = ''; // Clear the current list
 
 
+  canvas.getObjects().forEach((obj, index) => {
+    const layerItem = document.createElement('div');
+    layerItem.className = 'layer-item';
+    layerItem.draggable = true; // Make the item draggable
+    layerItem.setAttribute('data-index', index); // Store index in data attribute
 
-  layerItem.appendChild(thumbnail); // Append thumbnail to layer item
-  layerItem.innerHTML += `${obj.type}`; // Add layer type text after thumbnail
+    // Create an img element for the thumbnail
+    const thumbnail = new Image();
+    thumbnail.src = obj.toDataURL(); // Get thumbnail as data URL
+    thumbnail.alt = obj.type; // Alternative text for the image
+    thumbnail.style.height = "40px";
+    thumbnail.style.maxWidth = "100px";
+    thumbnail.style.margin = "5px auto";
+    thumbnail.style.display = "block";
 
 
-  // layerItem.innerHTML = `${index + 1}: ${obj.type}`;
 
-  // Highlight selected object
-  if (obj === canvas.getActiveObject()) {
-    layerItem.classList.add('selected-layer');
-  }
+    layerItem.appendChild(thumbnail); // Append thumbnail to layer item
+    layerItem.innerHTML += `${obj.type}`; // Add layer type text after thumbnail
 
-  // Drag events for drag-and-drop reordering
-  layerItem.addEventListener('dragstart', handleDragStart);
-  layerItem.addEventListener('dragover', handleDragOver);
-  layerItem.addEventListener('drop', handleDrop);
-  layerItem.addEventListener('dragend', handleDragEnd);
 
-  // Click event to select object from layer panel
-  layerItem.addEventListener('click', function () {
-    canvas.setActiveObject(obj);
-    canvas.renderAll();
-    updateLayerPanel(); // Update the panel after selection
+    // layerItem.innerHTML = `${index + 1}: ${obj.type}`;
+
+    // Highlight selected object
+    if (obj === canvas.getActiveObject()) {
+      layerItem.classList.add('selected-layer');
+    }
+
+    // Drag events for drag-and-drop reordering
+    layerItem.addEventListener('dragstart', handleDragStart);
+    layerItem.addEventListener('dragover', handleDragOver);
+    layerItem.addEventListener('drop', handleDrop);
+    layerItem.addEventListener('dragend', handleDragEnd);
+
+    // Click event to select object from layer panel
+    layerItem.addEventListener('click', function () {
+      canvas.setActiveObject(obj);
+      canvas.renderAll();
+      updateLayerPanel(); // Update the panel after selection
+    });
+
+    layerList.appendChild(layerItem);
   });
-
-  layerList.appendChild(layerItem);
-});
 }
 
 // Drag and Drop Handlers
 
 function handleDragStart(event) {
-draggedLayerIndex = event.target.getAttribute('data-index');
-event.target.classList.add('dragging');
+  draggedLayerIndex = event.target.getAttribute('data-index');
+  event.target.classList.add('dragging');
 }
 
 function handleDragOver(event) {
-event.preventDefault(); // Allow drop
-event.target.classList.add('drag-over');
+  event.preventDefault(); // Allow drop
+  event.target.classList.add('drag-over');
 }
 
 function handleDrop(event) {
-event.preventDefault();
-const targetLayerIndex = event.target.getAttribute('data-index');
+  event.preventDefault();
+  const targetLayerIndex = event.target.getAttribute('data-index');
 
-if (draggedLayerIndex !== null && targetLayerIndex !== null && draggedLayerIndex !== targetLayerIndex) {
-  reorderLayers(draggedLayerIndex, targetLayerIndex);
-}
+  if (draggedLayerIndex !== null && targetLayerIndex !== null && draggedLayerIndex !== targetLayerIndex) {
+    reorderLayers(draggedLayerIndex, targetLayerIndex);
+  }
 
-event.target.classList.remove('drag-over');
+  event.target.classList.remove('drag-over');
 }
 
 function handleDragEnd(event) {
-event.target.classList.remove('dragging');
+  event.target.classList.remove('dragging');
 }
 
 // Reorder layers on canvas based on drag-and-drop
 function reorderLayers(draggedIndex, targetIndex) {
-const objects = canvas.getObjects();
-const draggedObject = objects[draggedIndex];
+  const objects = canvas.getObjects();
+  const draggedObject = objects[draggedIndex];
 
-// Remove dragged object and reinsert it at the new position
-objects.splice(draggedIndex, 1);
-objects.splice(targetIndex, 0, draggedObject);
+  // Remove dragged object and reinsert it at the new position
+  objects.splice(draggedIndex, 1);
+  objects.splice(targetIndex, 0, draggedObject);
 
-// Re-render canvas with reordered objects
-canvas.clear();
-objects.forEach(obj => canvas.add(obj));
-canvas.renderAll();
+  // Re-render canvas with reordered objects
+  canvas.clear();
+  objects.forEach(obj => canvas.add(obj));
+  canvas.renderAll();
 
-// Update layer panel after reordering
-updateLayerPanel();
+  // Update layer panel after reordering
+  updateLayerPanel();
 }
 
 // Update layer panel when object is selected
@@ -337,8 +337,6 @@ canvas.upperCanvasEl.addEventListener('contextmenu', (e) => {
 idInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && selectedObject) {
     selectedObject.set('id', idInput.value); // Set the ID
-    console.log(`Object ID updated: ${selectedObject.id}`);
-
     idInput.style.display = 'none'; // Hide the input box
     idInput.value = '';
     selectedObject = null;
@@ -381,10 +379,10 @@ function setUserData() {
   updateObject('address', userData.address);
 
 
-  const appLogo = canvas.getObjects().find(obj => obj.id === 'appLogo');
+  const appLogo = canvas.getObjects().find(obj => obj.id === 'logo');
   if (appLogo && userData.appLogo) {
     fabric.Image.fromURL(userData.appLogo, function (img) {
-      img.set({ height: 60, width: 60 });
+      img.set({ height: 60 });
       appLogo.setElement(img.getElement());
       canvas.renderAll();
     });
@@ -394,42 +392,86 @@ function setUserData() {
 }
 
 
-// Profile Form Submission
-// document.getElementById('profileForm').addEventListener('submit', function (e) {
-//   e.preventDefault();
-//   const formData = new FormData(this);
-//   const logo = formData.get('logo');
 
-//   if (logo && logo.type.startsWith('image/')) {
-//     const reader = new FileReader();
-//     reader.onloadend = function () {
-//       localStorage.setItem('logo', reader.result);
-//       document.getElementById('logoPreview').src = reader.result;
-//     };
-//     reader.readAsDataURL(logo);
-//   }
 
-//   localStorage.setItem('business_name', formData.get('business_name'));
-//   localStorage.setItem('mobile_no', formData.get('mobile_no'));
-//   localStorage.setItem('address', formData.get('address'));
+// copy and paste feature 
+let copiedObjects = null;
 
-//   if (confirm('Data saved to local storage! Would you like to proceed?')) {
-//     location.reload();
-//   } else {
-//     alert('You chose not to proceed.');
-//   }
-// });
-
-fabric.util.loadFonts = function (canvas) {
-  canvas.getObjects().forEach(obj => {
-    if (obj.type === 'textbox' && obj.fontFamily) {
-      const fontFamily = obj.fontFamily;
-      obj.fontFamily = ''; // Reset font to force re-rendering
-      obj.fontFamily = fontFamily;
+document.addEventListener('keydown', function (e) {
+  if (e.ctrlKey && e.key === 'c') { // Check for Ctrl+C
+    const activeObjects = canvas.getActiveObjects();
+    if (activeObjects.length > 0) {
+      copiedObjects = activeObjects.map(obj => obj.toObject());
+      console.log('Objects copied:', copiedObjects);
     }
-  });
-  canvas.renderAll();
-};
+  }
+});
+document.addEventListener('keydown', function (e) {
+  if (e.ctrlKey && e.key === 'v' && copiedObjects) { // Check for Ctrl+V
+    copiedObjects.forEach(objData => {
+      fabric.util.enlivenObjects([objData], function (objects) {
+        objects.forEach(obj => {
+          obj.left += 10; // Offset for new position
+          obj.top += 10;
+          canvas.add(obj);
+        });
+        canvas.renderAll();
+      });
+    });
+  }
+});
 
-// Example: Call after font is loaded
-fabric.util.loadFonts(canvas);
+// opacity
+const opacitySlider = document.getElementById('opacity-slider');
+
+// Update opacity when opacitySlider value changes
+opacitySlider.addEventListener('input', function () {
+  const obj = canvas.getActiveObject(); // Get the selected object
+  if (obj) {
+    obj.set('opacity', parseFloat(this.value));
+    canvas.renderAll();
+  }
+});
+
+const borderSlider = document.getElementById('border-radius-slider');
+
+borderSlider.addEventListener('input', function () {
+  const radius = parseInt(this.value, 10); // Get slider value
+  const obj = canvas.getActiveObject(); // Get the selected object
+
+  if (!obj) return; // No object selected, do nothing
+
+  if (obj.type === 'rect') {
+    // For rectangles
+    obj.set({
+      rx: radius,
+      ry: radius,
+    });
+  } else if (obj.type === 'image') {
+    // For images, apply a clipPath
+    const clipRect = new fabric.Rect({
+      width: obj.width,
+      height: obj.height,
+      rx: radius,
+      ry: radius,
+      originX: 'center',
+      originY: 'center',
+    });
+
+    obj.clipPath = clipRect;
+
+    // Ensure the clipPath matches the image's scale and transformations
+    obj.clipPath.scaleX = obj.scaleX;
+    obj.clipPath.scaleY = obj.scaleY;
+    obj.clipPath.left = 0; // ClipPath should align to the object's center
+    obj.clipPath.top = 0;
+  } else {
+    console.warn('Border radius adjustment is not supported for this object type.');
+  }
+
+  canvas.renderAll(); // Re-render the canvas
+});
+
+
+
+

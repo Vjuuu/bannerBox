@@ -23,13 +23,13 @@
                             <input class="form-control me-2 object-color-input p-0" type="color" style="width:100px">
                         </div>
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
+                            <li class="nav-item d-none">
                                 <button class="btn btn-light me-2"><i class="bi bi-arrow-90deg-left"></i></button>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item d-none">
                                 <button class="btn btn-light me-2"><i class="bi bi-arrow-90deg-right"></i></button>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item <?=(isset($user_roll) && $user_roll == "user") ? 'd-none': ''?>">
                                 <a class="btn btn-primary me-2" id="btn_save_template" data-bs-toggle="modal"
                                     data-bs-target="#saveTemplateModal">Save</a>
                             </li>
@@ -159,6 +159,15 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="">Opacity</label>
+                            <input type="range" id="opacity-slider" min="0" max="1" step="0.1" value="1" class="form-range">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Border Radius</label>
+                            <input type="range" id="border-radius-slider" min="0" max="50" value="0" step="1" class="form-range">
+                        </div>
+
+                        <div class="form-group">
                             <label for="">Color</label>
                             <input type="color" id="object-color" class="form-control object-color-input">
                         </div>
@@ -283,18 +292,15 @@ $(document).ready(function() {
     const templateJSON = <?= json_encode($template[0]->template_json); ?>;
 
     try {
-        console.log("Template JSON:", templateJSON);
-
         canvas.loadFromJSON(
             templateJSON,
             function() {
                 canvas.renderAll();
-                console.log("Template loaded successfully!");
                 setUserData();
             },
             function(objectData, object) {
-                console.log("Processing object:", objectData);
-                console.log("Created object:", object);
+                // console.log("Processing object:", objectData);
+                // console.log("Created object:", object);
             }
         );
     } catch (error) {
@@ -304,7 +310,6 @@ $(document).ready(function() {
 
     try {
         const parsedJSON = JSON.parse(templateJSON);
-        console.log("JSON is valid:", parsedJSON);
     } catch (parseError) {
         console.error("JSON is invalid:", parseError.message);
     }

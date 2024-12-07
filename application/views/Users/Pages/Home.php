@@ -40,7 +40,7 @@
                                 <a class="nav-link" href="#">Category</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Profile</a>
+                                <a class="nav-link" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Privacy</a>
@@ -68,7 +68,7 @@
                 <p class="fw-bold">Banners</p>
                 <div class="row">
                     <?php foreach($templates as $template) {?>
-                    <div class="col-md-2 ">
+                    <div class="col-md-2 mb-4">
                         <a href="<?= base_url()?>view-poster/<?=$template->id;?>" class="border d-block">
                             <img src="<?=$template->template_thumbnail?>" alt="" class="img-fluid">
                         </a>
@@ -84,7 +84,47 @@
         </div>
     </div>
 
-    
+    <!-- profile modal  -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="profileForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" alt="" id="logoPreview" class="img-fluid" style="height: 60px;width: auto;">
+                        <div class="form-group">
+
+                            <label for="">Logo</label>
+                            <input type="file" name="logo" id="logo" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Business Name</label>
+                            <input type="text" class="form-control" name="business_name" id="business_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Mobile No.</label>
+                            <input type="text" class="form-control" name="mobile_no" id="mobile_no">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Address</label>
+                            <textarea class="form-control" name="address" id="address"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- profile modal : close  -->
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
@@ -95,5 +135,59 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
 </body>
+<script>
+// Profile Form Submission
+document.getElementById('profileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const logo = formData.get('logo');
+
+    if (logo && logo.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onloadend = function() {
+            localStorage.setItem('logo', reader.result);
+            document.getElementById('logoPreview').src = reader.result;
+        };
+        reader.readAsDataURL(logo);
+    }
+
+    localStorage.setItem('business_name', formData.get('business_name'));
+    localStorage.setItem('mobile_no', formData.get('mobile_no'));
+    localStorage.setItem('address', formData.get('address'));
+
+    if (confirm('Data saved to local storage! Would you like to proceed?')) {
+        location.reload();
+    } else {
+        alert('You chose not to proceed.');
+    }
+});
+
+// Logo Preview Update
+document.getElementById('logo').addEventListener('change', function(e) {
+    const logo = e.target.files[0];
+    if (logo) {
+        const reader = new FileReader();
+        reader.onloadend = function() {
+            document.getElementById('logoPreview').src = reader.result;
+        };
+        reader.readAsDataURL(logo);
+    }
+});
+
+// Load User Data from LocalStorage
+const userData = {
+  business_name: localStorage.getItem('business_name'),
+  phone_no: localStorage.getItem('mobile_no'),
+  address: localStorage.getItem('address'),
+  appLogo: localStorage.getItem('logo')
+};
+
+if (userData.business_name) {
+  document.getElementById('business_name').value = userData.business_name;
+  document.getElementById('mobile_no').value = userData.phone_no;
+  document.getElementById('address').value = userData.address;
+  document.getElementById('logoPreview').src=userData.appLogo
+}
+</script>
 
 </html>

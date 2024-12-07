@@ -39,6 +39,7 @@ class App extends CI_Controller {
 	public function view_poster($id)
 	{
 		$data['template'] =  $this->Canvas_template_model->get_template($id);
+		$data['user_roll'] = "user";
         if($data['template'])
         {
            $this->load->view('canvas_editor/Canvas_editor',$data);
