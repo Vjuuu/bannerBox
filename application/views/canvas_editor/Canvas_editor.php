@@ -1,9 +1,23 @@
-<?php include VIEWPATH .'./canvas_editor/component/header.php';?>
+<?php include VIEWPATH .'./canvas_editor/component/Header.php';?>
 <style>
 #idInput {
     position: absolute;
     display: none;
     z-index: 1000;
+}
+
+@media (max-width:768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .canvas-container {
+        transform: scale(0.8);
+    }
+    .content
+    {
+        padding:10px !important;
+    }
 }
 </style>
 
@@ -12,8 +26,8 @@
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Navbar</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    <a class="navbar-brand" href="#">BanerBox</a>
+                    <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -34,11 +48,12 @@
                                     data-bs-target="#saveTemplateModal">Save</a>
                             </li>
                         </ul>
-                        <form class="d-flex">
-                            <button class="btn btn-primary" type="button" id="export-image"><i
-                                    class="bi bi-download me-1"></i>Download</button>
-                        </form>
+
                     </div>
+                    <form class="d-flex">
+                        <button class="btn btn-primary" type="button" id="export-image"><i
+                                class="bi bi-download me-1"></i>Download</button>
+                    </form>
                 </div>
             </nav>
         </header>
@@ -160,11 +175,13 @@
 
                         <div class="form-group">
                             <label for="">Opacity</label>
-                            <input type="range" id="opacity-slider" min="0" max="1" step="0.1" value="1" class="form-range">
+                            <input type="range" id="opacity-slider" min="0" max="1" step="0.1" value="1"
+                                class="form-range">
                         </div>
                         <div class="form-group">
                             <label for="">Border Radius</label>
-                            <input type="range" id="border-radius-slider" min="0" max="50" value="0" step="1" class="form-range">
+                            <input type="range" id="border-radius-slider" min="0" max="50" value="0" step="1"
+                                class="form-range">
                         </div>
 
                         <div class="form-group">
@@ -219,7 +236,7 @@
                             <label for="">Category</label>
                             <select name="category" id="category" class="form-select">
                                 <?php foreach($categories as $category){?>
-                                   <option value="<?=$category->id?>"><?=$category->category_name;?></option>
+                                <option value="<?=$category->id?>"><?=$category->category_name;?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -234,7 +251,7 @@
     </div>
     <!-- profile modal : close  -->
 </body>
-<?php include VIEWPATH .'./canvas_editor/component/footer.php';?>
+<?php include VIEWPATH .'./canvas_editor/component/Footer.php';?>
 <script>
 $(document).ready(function() {
     // const canvas = new fabric.Canvas('canvas');

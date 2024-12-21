@@ -80,6 +80,7 @@ $route['admin/delete-template/(:num)'] = 'canvas_editor/canvas_editor/delete_tem
 
 // ==========================   user routes ========================================= 
 $route['default_controller'] = 'app/landing_screen';
+$route['profile'] = 'app/profile';
 $route['signup'] = 'app/signup';
 $route['login'] = 'app/login';
 $route['add-business-data'] = 'app/add_business_details';

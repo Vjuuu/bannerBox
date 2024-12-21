@@ -50,6 +50,11 @@ class App extends CI_Controller {
         }
 	}
 
+	public function profile() 
+	{
+		$this->load->view('Users/Pages/Profile');
+	}
+
 	public function signup()
 	{
 		$this->load->view('signup_page');
