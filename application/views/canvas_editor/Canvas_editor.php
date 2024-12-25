@@ -14,14 +14,17 @@
     .canvas-container {
         transform: scale(0.8);
     }
-    .content
-    {
-        padding:10px !important;
+
+    .content {
+        padding: 10px !important;
     }
 }
 </style>
 
 <body style="background-color: rgb(46, 45, 45);">
+    <div class="loader-container d-none">
+        <span class="loader"></span>
+    </div>
     <div class="wrapper">
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -274,6 +277,10 @@ $(document).ready(function() {
                 category: category,
                 thumbnail: templateThumbnail,
             }),
+            beforeSend: function() {
+                // setting a timeout
+                $('.loader-container').removeClass('d-none');
+            },
             success: function(response) {
 
                 Toastify({
@@ -294,9 +301,13 @@ $(document).ready(function() {
                 setTimeout(() => {
                     window.location.href =
                         "<?=base_url()?>admin/canvas-all-templates";
-                }, 3000);
+                }, 1000);
 
             },
+            complete: function() {
+                $('.loader-container').addClass('d-none');
+            },
+
             error: function(xhr, status, error) {
                 console.error('Error saving template:', error);
             }

@@ -10,7 +10,7 @@ class Category_model extends CI_Model
           }
           else
           {
-            $query = $this->db->from('tbl_category')->get();
+            $query = $this->db->from('tbl_category')->where('status',1)->get();
           }
           return $query->result();
     }
@@ -29,6 +29,13 @@ class Category_model extends CI_Model
          $this->db->where('id',$id);
          $query = $this->db->update('tbl_category',$data);
          return $query;
+    }
+    public function delete_category($id)
+    {
+       $this->db->where('id',$id);
+       $data['status'] = 0;
+       $query = $this->db->update('tbl_category',$data);
+       return $query;
     }
     
    

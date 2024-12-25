@@ -59,6 +59,7 @@ $route['admin/profile/(:num)'] = 'admin/admin/profile/$1';
 $route['admin/edit-user/(:num)'] = 'admin/admin/edit_user/$1';
 $route['admin/category'] = 'admin/category';
 $route['admin/add-category'] = 'admin/category/add_category';
+$route['admin/delete-category'] = 'admin/category/delete_category';
 $route['get-category/(:num)'] = 'admin/category/get_category/$1';
 // simple template 
 $route['admin/add-template'] = 'admin/template/add_template';

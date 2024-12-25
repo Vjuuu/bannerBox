@@ -57,6 +57,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        
     }
 
+    public function delete_category()
+    {
+        $id =  $this->input->post('id');
+        $result = $this->category_model->delete_category($id);
+        if($result)
+        {
+            echo json_encode(['status'=>'success','message' => 'Category has been deleted...!']);
+        }
+        else
+        {
+            echo json_encode(['status'=>'failed','message'=>'Failed to detele...!']);
+        }
+    }
+
     public function get_category($id)
     {
         $result = $this->category_model->get_categories($id);
