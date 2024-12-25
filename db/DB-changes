@@ -1,0 +1,11 @@
+-- ==========================================
+-- Author: vijay salve
+-- Date: 25-12-2024
+-- Description: added language column in canvac_template for saving banner language 
+-- ==========================================
+
+-- Example: Adding a new column
+ALTER TABLE `canvas_templates` ADD `langauge` VARCHAR(100) NULL DEFAULT NULL AFTER `category`;
+
+
+

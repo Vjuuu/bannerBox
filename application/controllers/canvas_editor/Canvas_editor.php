@@ -44,12 +44,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $canvasData = $inputData['canvasData'];
             $templateName = $inputData['name'];
             $category = $inputData['category'];
+            $language = $inputData['language'];
             $templateThubmail = $inputData['thumbnail'];
+            
            
             // Insert data into the database
             $data = [
                 'template_name' => $templateName,
                 'category' => $category,
+                'language' => $language,
                 'template_json' => $canvasData,
                 'template_thumbnail' => $templateThubmail,
             ];
@@ -79,6 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $canvasData = $inputData['canvasData'];
             $templateName = $inputData['name'];
             $category = $inputData['category'];
+            $language = $inputData['language'];
             $templateThubmail = $inputData['thumbnail'];
            
             // Insert data into the database
@@ -86,6 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 'template_name' => $templateName,
                 'category' => $category,
                 'template_json' => $canvasData,
+                'language' => $language,
                 'template_thumbnail' => $templateThubmail,
             ];
             

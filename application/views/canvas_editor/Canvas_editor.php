@@ -100,12 +100,10 @@
                     </li>
 
                 </ul>
-
                 <div class="tab-content text-light" id="v-pills-tabContent">
                     <div class="tab-pane fade show active p-3 h-100" id="v-pills-filter" role="tabpanel"
                         aria-labelledby="v-pills-filter-tab">
                         <p>Templates</p>
-
                     </div>
                     <div class="tab-pane fade show  p-3 h-100" id="v-pills-shapes" role="tabpanel"
                         aria-labelledby="v-pills-shapes-tab">
@@ -243,6 +241,23 @@
                                 <?php } ?>
                             </select>
                         </div>
+                        <?php 
+                        $language = '';
+                         if(isset($template))
+                         {
+                              $language = $template[0]->language;
+                         }
+                        ?>
+
+                        
+                        <div class="form-group mb-2">
+                            <label>Select language</label>
+                            <select name="language" id="language" class="form-select">
+                                <option value="english" <?= ($language === 'english') ? 'selected' : ''?> >English</option>
+                                <option value="marathi" <?= ($language === 'marathi') ? 'selected' : ''?>>Marathi</option>
+                                <option value="hindi" <?= ($language === 'hindi') ? 'selected' : ''?>>Hindi</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -267,6 +282,8 @@ $(document).ready(function() {
         const canvasData = JSON.stringify(canvas.toJSON());
         const template_name = $('#name').val();
         const category = $('#category').val();
+        const language = $('#language').val();
+
         const templateThumbnail = canvas.toDataURL();
         $.ajax({
             url: '<?=base_url()?><?=(isset($template)? 'admin/edit_canvas_template/'.$template[0]->id: 'admin/save_canvas_template')?>',
@@ -275,6 +292,7 @@ $(document).ready(function() {
                 canvasData: canvasData,
                 name: template_name,
                 category: category,
+                language : language,
                 thumbnail: templateThumbnail,
             }),
             beforeSend: function() {
