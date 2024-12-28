@@ -22,21 +22,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     public function get_template()
     {
         $data['templates'] = $this->canvas_template_model->get_template();
-     
         $this->load->view('Admin/Templates/Template_list',$data);
     }
+
     public function view_template($id)
     {
         $this->load->model('Category_model'); 
         $data['categories'] = $this->Category_model->get_categories();
         $data['template'] = $this->canvas_template_model->get_template($id);
-       
         $this->load->view('canvas_editor/canvas_editor',$data);
     }
 
     public function save_template() 
     {
-       
         // Get the JSON input
         $inputData = json_decode(file_get_contents('php://input'), true);
 

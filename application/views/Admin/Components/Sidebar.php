@@ -14,9 +14,9 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="<?=base_url()?>admin/add-template">Add Template</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?=base_url().'admin/all-templates';?>">All Templates</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?=base_url().'admin/canvas-all-templates';?>">Canvas Templates</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?=base_url()?>admin/add-template">Add Template</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?=base_url().'admin/all-templates';?>">All Templates</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?=base_url().'admin/canvas-all-templates';?>">Canvas Templates</a></li>
 
               </ul>
             </div>
@@ -25,6 +25,12 @@
             <a class="nav-link" href="<?=base_url()?>admin/category">
               <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Catrgory</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?=base_url()?>admin/category-group">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Grouping</span>
             </a>
           </li>
           <li class="nav-item">

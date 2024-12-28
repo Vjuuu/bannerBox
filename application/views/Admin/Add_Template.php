@@ -1,6 +1,6 @@
 <?php
-include VIEWPATH .'./admin/components/header.php';
-include VIEWPATH .'./admin/components/sidebar.php';
+include VIEWPATH .'./Admin/Components/Header.php';
+include VIEWPATH .'./Admin/Components/Sidebar.php';
 ?>
 
 
@@ -67,4 +67,4 @@ include VIEWPATH .'./admin/components/sidebar.php';
         }
     };
 </script>
-<?php include VIEWPATH .'./admin/components/footer.php';?>
+<?php include VIEWPATH .'./Admin/Components/Footer.php';?>

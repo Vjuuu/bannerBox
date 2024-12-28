@@ -1,6 +1,6 @@
 <?php
-include VIEWPATH .'./admin/components/header.php';
-include VIEWPATH .'./admin/components/sidebar.php';
+include VIEWPATH .'./Admin/Components/Header.php';
+include VIEWPATH .'./Admin/Components/Sidebar.php';
 ?>
 
 <style>
@@ -98,7 +98,7 @@ include VIEWPATH .'./admin/components/sidebar.php';
     <!-- content-wrapper ends -->
     <!-- partial:partials/_footer.html -->
 
-    <?php include VIEWPATH .'./admin/components/footer.php';?>
+    <?php include VIEWPATH .'./Admin/Components/Footer.php';?>
     <script>
     $(document).ready(function() {
         $('.btn-delete').on('click', function(e) {

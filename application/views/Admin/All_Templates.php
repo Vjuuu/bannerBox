@@ -30,6 +30,6 @@ $this->load->view('admin/components/sidebar');
 
     <?php 
     
-    $this->load->view('admin/components/footer');
+    $this->load->view('Admin/Components/Footer');
     
     ?>

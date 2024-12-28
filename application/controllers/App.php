@@ -23,13 +23,16 @@ class App extends CI_Controller {
         parent::__construct();
         $this->load->model('Canvas_template_model');
 		$this->load->model('User_model');
+		$this->load->model('Category_model');
+
         $this->load->library('form_validation');
 		$this->load->library('CorsMiddleware');
         $this->corsmiddleware->handle();
     }
 	public function index()
 	{
-		$data['templates'] = $this->Canvas_template_model->get_template();
+		// $data['templates'] = $this->Canvas_template_model->get_template();
+		$data['grouped_data'] =  $this->Category_model->category_group();
         $this->load->view('Users/Pages/Home',$data);
 	}
 	public function landing_screen()

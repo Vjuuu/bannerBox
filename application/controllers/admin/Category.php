@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         $result = $this->category_model->get_categories();
         $data['categories'] = $result;
-        $this->load->view('admin/category',$data);
+        $this->load->view('Admin/Category',$data);
     }
     public function add_category()
     {
@@ -83,6 +83,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             echo json_decode(['status'=>'failed','message'=>'category not found...!']);
         }
     }
+
+    public function banner_by_category($id)
+    {
+        if(!$this->session->userdata('logged_in'))
+        {
+            redirect('admin/login');
+        }
+
+        $data['banners'] =  $this->category_model->banner_by_category($id);
+        $this->load->view('admin/banner_by_category',$data);
+    }
+    public function category_group()
+    {
+        if(!$this->session->userdata('logged_in'))
+        {
+            redirect('admin/login');
+        }
+
+        $data['grouped_data'] =  $this->category_model->category_group();
+        // var_dump($data['grouped_data']);
+        // die();
+
+        $this->load->view('admin/category_group',$data);
+    }
+   
    
  }
 ?>

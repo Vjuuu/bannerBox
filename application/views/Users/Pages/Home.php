@@ -48,15 +48,23 @@
 </nav>
 <div class="tab-content p-3" id="myTabContent">
     <div class="tab-pane fade show active" id="trending" role="tabpanel" aria-labelledby="trending-tab">
-        <div class="mb-3">
-            <label for="" class="mb-3">Morning Motivations</label>
+        
+    </div>
+    <div class="tab-pane fade" id="new" role="tabpanel" aria-labelledby="new-tab">New content</div>
+    <div class="tab-pane fade" id="popular" role="tabpanel" aria-labelledby="popular-tab">Popular content</div>
+    <!-- <div class="tab-pane fade" id="seasonal" role="tabpanel" aria-labelledby="seasonal-tab">Seasonal content</div> -->
+</div>
+<section class="popular-posters mb-4 p-3">
+<?php foreach ($grouped_data as $category_name => $templates): ?>
+<div class="mb-3">
+            <label for="" class="mb-3"><?=$category_name;?></label>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    <?php foreach($templates as $template) {?>
+                <?php foreach ($templates as $template){ ?>
                     <div class="swiper-slide">
-                        <a href="<?= base_url()?>view-poster/<?=$template->id;?>">
+                        <a href="<?= base_url()?>view-poster/<?=$template['template_id']?>">
                             <div class="card h-100 bg-dark text-white">
-                                <img src="<?=$template->template_thumbnail?>" class="card-img-top btn-poster"
+                                <img src="<?=$template['template_thumbnail']?>" class="card-img-top btn-poster"
                                     alt="Template 1">
                             </div>
                         </a>
@@ -66,23 +74,8 @@
                 <!-- <div class="swiper-pagination"></div> -->
             </div>
         </div>
-    </div>
-    <div class="tab-pane fade" id="new" role="tabpanel" aria-labelledby="new-tab">New content</div>
-    <div class="tab-pane fade" id="popular" role="tabpanel" aria-labelledby="popular-tab">Popular content</div>
-    <!-- <div class="tab-pane fade" id="seasonal" role="tabpanel" aria-labelledby="seasonal-tab">Seasonal content</div> -->
-</div>
-<section class="popular-posters mb-4 p-3">
-    <h3 class="h5 mb-3">Posters</h3>
-    <div class="row g-4">
-        <?php foreach($templates as $template) {?>
-        <div class="col-6 col-md-3 col-xl-4">
-            <a href="<?= base_url()?>view-poster/<?=$template->id;?>">
-                <div class="card h-100 bg-dark text-white">
-                    <img src="<?=$template->template_thumbnail?>" class="card-img-top btn-poster" alt="Template 1">
-                </div>
-            </a>
-        </div>
-        <?php }?>
-    </div>
+        <?php endforeach; ?>
+
+    
 </section>
 <?php include VIEWPATH.'./Users/Components/Footer.php'; ?>

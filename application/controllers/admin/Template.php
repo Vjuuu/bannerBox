@@ -142,7 +142,6 @@ class Template extends CI_Controller{
 
     }
 
-
 }
 
 ?>

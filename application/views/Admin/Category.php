@@ -25,11 +25,17 @@ include VIEWPATH.'admin/components/sidebar.php';
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($categories as $category){?>
+                                
+                                <?php
+                                   $srNo = 0; 
+                                   foreach($categories as $category){
+                                    $srNo = $srNo + 1;
+                                ?>
                                 <tr class="category-row">
-                                    <td><?= $category->id?></td>
+                                    <td><?= $srNo; ?></td>
                                     <td><?= $category->category_name?></td>
                                     <td class="text-right">
+                                        <a href="<?=base_url()?>admin/banner-by-category/<?= $category->id ?>" class="btn btn-primary btn-sm">View</a>
                                         <a href="" class="btn btn-sm btn-dark btn-edit"
                                             data-id="<?= $category->id ?>">Edit</a>
                                         <a href="" class="btn btn-sm btn-danger btn-delete"
@@ -110,7 +116,8 @@ include VIEWPATH.'admin/components/sidebar.php';
                         swal(res.message)
                         $('#categoryModal').modal('hide')
                     }
-                    console.log("Form submitted successfully!", response);
+                    // console.log("Form submitted successfully!", response);
+                    location.reload();
                 },
                 error: function(xhr, status, error) {
 
@@ -174,7 +181,8 @@ include VIEWPATH.'admin/components/sidebar.php';
                                         'success'
                                     );
                                     // Optionally remove the category from the DOM
-                                    $(this).closest('.category-row').remove();
+                                    // $(this).closest('.category-row').remove();
+                                    location.reload();
                                 } else {
                                     swal(
                                         'Error!',

@@ -58,6 +58,7 @@ $route['admin/logout'] = 'admin/admin/logout';
 $route['admin/profile/(:num)'] = 'admin/admin/profile/$1';
 $route['admin/edit-user/(:num)'] = 'admin/admin/edit_user/$1';
 $route['admin/category'] = 'admin/category';
+$route['admin/category-group'] = 'admin/category/category_group';
 $route['admin/add-category'] = 'admin/category/add_category';
 $route['admin/delete-category'] = 'admin/category/delete_category';
 $route['get-category/(:num)'] = 'admin/category/get_category/$1';
@@ -80,7 +81,7 @@ $route['admin/delete-template/(:num)'] = 'canvas_editor/canvas_editor/delete_tem
 
 
 // ==========================   user routes ========================================= 
-$route['default_controller'] = 'app/landing_screen';
+$route['default_controller'] = 'app';
 $route['profile'] = 'app/profile';
 $route['signup'] = 'app/signup';
 $route['login'] = 'app/login';
