@@ -89,6 +89,8 @@ $route['add-business-data'] = 'app/add_business_details';
 
 $route['home'] = 'app/index';
 $route['view-poster/(:num)'] = 'app/view_poster/$1';
+$route['category'] = 'app/category/';
+
 
 // error_pages 
 $route['404-page'] = 'app/page_not_found';

@@ -111,6 +111,14 @@ class App extends CI_Controller {
         }
         }
 
+		public function category()
+		{
+			// $data['grouped_data'] =  $this->Category_model->categories_group();
+			// var_dump($data['grouped_data']);
+			// die();
+			$this->load->view('Users/Pages/Category');
+
+		}
 
 	// error page 
 	public function page_not_found()
