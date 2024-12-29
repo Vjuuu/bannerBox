@@ -51,13 +51,7 @@ class Category_model extends CI_Model
             $this->db->order_by('tbl_category.order_index', 'DESC'); // Default sorting by category ID
 
             $query = $this->db->get();
-            // if ($query) {
-            //     return $query->result_array();
-                
-            // } else {
-            //     return []; // Return an empty array on failure
-            // }
-
+           
             if ($query) {
               $result = $query->result_array();
               
@@ -66,15 +60,20 @@ class Category_model extends CI_Model
               foreach ($result as $row) {
                 if (!empty($row['template_id'])) { // Ignore rows without a template
                   $category_name = $row['category_name'];
+                  $category_id = $row['category_id'];
   
                   if (!isset($grouped_data[$category_name])) {
-                      $grouped_data[$category_name] = [];
+                      $grouped_data[$category_name] = [
+                        'category_id' => $category_id, // Include category ID
+                        'templates' => []
+                    ];
+                      
                   }
   
-                  $grouped_data[$category_name][] = [
-                      'template_id' => $row['template_id'],
-                      'template_thumbnail' => $row['template_thumbnail']
-                  ];
+                  $grouped_data[$category_name]['templates'][] = [
+                    'template_id' => $row['template_id'],
+                    'template_thumbnail' => $row['template_thumbnail']
+                ];
               }
               }
       

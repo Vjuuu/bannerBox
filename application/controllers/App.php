@@ -33,6 +33,8 @@ class App extends CI_Controller {
 	{
 		// $data['templates'] = $this->Canvas_template_model->get_template();
 		$data['grouped_data'] =  $this->Category_model->category_group();
+		// var_dump($data);
+		// die();
         $this->load->view('Users/Pages/Home',$data);
 	}
 	public function landing_screen()
@@ -113,11 +115,14 @@ class App extends CI_Controller {
 
 		public function category()
 		{
-			// $data['grouped_data'] =  $this->Category_model->categories_group();
-			// var_dump($data['grouped_data']);
-			// die();
-			$this->load->view('Users/Pages/Category');
-
+			$data['grouped_data'] =  $this->Category_model->category_group();
+			$this->load->view('Users/Pages/Category',$data);
+		}
+		public function banner_by_category($id)
+		{ 
+			$data['banner'] = $this->Category_model->category_group($id);
+		
+			$this->load->view('Users/Pages/Banner_By_Category',$data);
 		}
 
 	// error page 

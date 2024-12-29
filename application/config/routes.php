@@ -90,6 +90,7 @@ $route['add-business-data'] = 'app/add_business_details';
 $route['home'] = 'app/index';
 $route['view-poster/(:num)'] = 'app/view_poster/$1';
 $route['category'] = 'app/category/';
+$route['banner-by-category/(:num)'] = 'app/banner_by_category/$1';
 
 
 // error_pages 
