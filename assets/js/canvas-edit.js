@@ -171,7 +171,7 @@ document.getElementById('export-image').addEventListener('click', function () {
 
   const link = document.createElement('a');
   link.href = dataURL;
-  link.download = `canvas-design.${format}`;
+  link.download = `${bannerName ? bannerName : 'banner'}${Date.now()}.${format}`;
   link.click();
 });
 

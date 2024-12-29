@@ -91,6 +91,26 @@ class App extends CI_Controller {
 		}
 	}
 
+	public function save_user_profile()
+    {
+         // Get POST data
+        $data = array(
+            'username' => $this->input->post('name'),
+            'b_name' => $this->input->post('business_name'),
+            'mobile' => $this->input->post('mobile_no'),
+            'address' => $this->input->post('address')
+        );
+
+        // Insert data into the database
+        $result = $this->User_model->save_user_info($data);
+
+        if ($result) {
+            echo json_encode(['status' => 'success', 'message' => 'Data saved successfully.']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to save data.']);
+        }
+        }
+
 
 	// error page 
 	public function page_not_found()

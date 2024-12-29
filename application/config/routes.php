@@ -95,7 +95,8 @@ $route['404-page'] = 'app/page_not_found';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-
+// user profile 
+$route['save-user-info']= 'app/save_user_profile';
 
 // api routes  
 $route['api/banners'] = 'api/banner/index'; 

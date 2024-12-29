@@ -1,4 +1,7 @@
 <?php include VIEWPATH .'./canvas_editor/component/Header.php';?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.15.3/sweetalert2.css"
+    integrity="sha512-K1UvyLtJVqbWVNOZRvv1wqH97NXkV4fZRqxAJquVvMkOllS1qQ/BY+lMGKWxhPuQloqaYi6uZplZFMPUks3+lA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
 #idInput {
     position: absolute;
@@ -29,7 +32,7 @@
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">BanerBox</a>
+                    <a href="#" class="btn btn-dark btn-back"><i class="bi bi-arrow-left fs-5"></i></a>
                     <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -269,11 +272,64 @@
     </div>
     <!-- profile modal : close  -->
 </body>
+
+<!-- Modal -->
+<div class="modal fade " id="profileModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Profile</h5>
+                <!-- <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+            <form id="profileForm" autocomplete="off">
+                <div class="modal-body">
+                    <div class="form-group mb-4">
+                        <label class="fs-6 mb-2">Name</label>
+                        <input type="text" name="name" id="name" class="form-control form-control-dark" value="" required>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label class="fs-6 mb-2">Business Name</label>
+                        <input type="text" name="business_name" id="business_name"
+                            class="form-control form-control-dark" value="" maxlength="25" required>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label>Mobile No</label>
+                        <input type="number" name="mobile_no" id="mobile_no" class="form-control form-control-dark"
+                            value=""  required >
+                    </div>
+                    <div class="form-group mb-4">
+                        <label>Address</label>
+                        <textarea name="address" id="address" class="form-control form-control-dark"  maxlength="50" auto></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<?php if (isset($template)){?>
+   <script>const bannerName = "<?= $template[0]->template_name; ?>";</script> 
+<?php  }else{?>
+   <script>const bannerName = "bannerBox";</script> 
+
+<?php } ?>
 <?php include VIEWPATH .'./canvas_editor/component/Footer.php';?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.15.3/sweetalert2.all.min.js"
+    integrity="sha512-Zn2E4ZW5LTDHqcRZ27wyqHBiVTIKIDgmhhvvoIsliWx2sGgiSrDoRt0HxLSuOZfv9sM8lZkXZF3oX49c6cvalA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 $(document).ready(function() {
     // const canvas = new fabric.Canvas('canvas');
     // save template 
+
+    $('.btn-back').on('click',function()
+    {
+        window.history.back();
+    })
 
 
 
@@ -336,6 +392,7 @@ $(document).ready(function() {
     <?php if (isset($template)) { ?>
 
     const templateJSON = <?= json_encode($template[0]->template_json); ?>;
+    const bannerName = "<?= $template[0]->template_name; ?>";
 
     try {
         canvas.loadFromJSON(
@@ -364,6 +421,53 @@ $(document).ready(function() {
     <?php } else { ?>
     console.log("No template to load.");
     <?php } ?>
+
+
+
+    var businessName = localStorage.getItem('business_name');
+    if (businessName === null || businessName === '') {
+        $('#profileModel').modal('show');
+    }
+    document.getElementById('profileForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        // Storing data in localStorage
+        localStorage.setItem('business_name', formData.get('business_name'));
+        localStorage.setItem('mobile_no', formData.get('mobile_no'));
+        localStorage.setItem('address', formData.get('address'));
+
+        // Sending data to the server
+        $.ajax({
+            type: 'POST',
+            url: '<?= base_url("save-user-info") ?>',
+            data: {
+                name: formData.get('name'),
+                business_name: formData.get('business_name'),
+                mobile_no: formData.get('mobile_no'),
+                address: formData.get('address')
+            },
+            success: function(response) {
+                Swal.fire({
+                    title: "Good job!",
+                    text: "Your Profile has been created",
+                    icon: "success"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#profileModel').modal('hide');
+                        location.reload();
+                    }
+                });
+            },
+            error: function() {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Failed to save data.",
+                    icon: "error"
+                });
+            }
+        });
+    });
 
 })
 </script>

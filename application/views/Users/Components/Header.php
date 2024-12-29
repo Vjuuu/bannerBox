@@ -15,7 +15,7 @@
     <!-- <div id="loader-wrapper">
         <div class="loader"></div>
     </div> -->
-    <div class="container-fluid p-0 ">
+    <div class="container-fluid p-0 pb-5">
         <header class="p-3 text-white" style="border-bottom:1px solid #373535">
             <h2 class="mb-0">BannerBox</h2>
         </header>

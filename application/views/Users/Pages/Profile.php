@@ -5,13 +5,13 @@
 
         <div class="form-group mb-4">
             <label class="fs-6 mb-2">Business Name</label>
-            <input type="text" name="business_name" id="business_name" class="form-control form-control-dark" value=""></div>
+            <input type="text" name="business_name" id="business_name" class="form-control form-control-dark" value="" maxlength="25" required></div>
         <div class="form-group mb-4">
             <label>Mobile</label>
-            <input type="text" name="mobile_no" id="mobile_no" class="form-control form-control-dark" value=""></div>
+            <input type="number" name="mobile_no" id="mobile_no" class="form-control form-control-dark" value="" required ></div>
         <div class="form-group mb-4">
             <label>Address</label>
-            <textarea name="address" id="address" class="form-control form-control-dark"></textarea>
+            <textarea name="address" id="address" class="form-control form-control-dark" maxlength="50" required></textarea>
         </div>
         <button type="submit"  class="btn btn-primary w-100">Submit</button>
     </form>
