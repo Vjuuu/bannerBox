@@ -17,6 +17,9 @@
     integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.15.3/sweetalert2.all.min.js"
+    integrity="sha512-Zn2E4ZW5LTDHqcRZ27wyqHBiVTIKIDgmhhvvoIsliWx2sGgiSrDoRt0HxLSuOZfv9sM8lZkXZF3oX49c6cvalA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 var swiper = new Swiper(".mySwiper", {
     slidesPerView: 1.5,

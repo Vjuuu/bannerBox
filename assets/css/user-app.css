@@ -155,3 +155,22 @@ body {
     background-color: #141414 !important;
     color: #dee2e6 !important;
 }
+.loaderContainer
+{
+    position: fixed;
+    height: 100vh !important;
+    width: 100% !important;
+    z-index: 110000 !important;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background: #252323;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loaderContainer img
+{
+    height: 100px;
+}

@@ -1,7 +1,6 @@
 <?php include VIEWPATH.'./Users/Components/Header.php'; ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.15.3/sweetalert2.css"
-    integrity="sha512-K1UvyLtJVqbWVNOZRvv1wqH97NXkV4fZRqxAJquVvMkOllS1qQ/BY+lMGKWxhPuQloqaYi6uZplZFMPUks3+lA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 <div class="hero-section">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -99,7 +98,7 @@
     <div class="modal-dialog ">
         <div class="modal-content bg-dark">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Profile</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Create Profile</h5>
                 <!-- <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button> -->
             </div>
             <form id="profileForm" autocomplete="off">
@@ -134,9 +133,7 @@
     </div>
 </div>
 <?php include VIEWPATH.'./Users/Components/Footer.php'; ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.15.3/sweetalert2.all.min.js"
-    integrity="sha512-Zn2E4ZW5LTDHqcRZ27wyqHBiVTIKIDgmhhvvoIsliWx2sGgiSrDoRt0HxLSuOZfv9sM8lZkXZF3oX49c6cvalA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
 $(document).ready(function() {
     var businessName = localStorage.getItem('business_name');
@@ -162,6 +159,9 @@ $(document).ready(function() {
                 mobile_no: formData.get('mobile_no'),
                 address: formData.get('address')
             },
+            beforeSend: function() {
+                $('.loaderContainer').removeClass('d-none');
+            },
             success: function(response) {
                 Swal.fire({
                     title: "Good job!",
@@ -172,6 +172,10 @@ $(document).ready(function() {
                         $('#profileModel').modal('hide');
                     }
                 });
+            },
+            complete:function()
+            {
+                $('.loaderContainer').addClass('d-none');
             },
             error: function() {
                 Swal.fire({
