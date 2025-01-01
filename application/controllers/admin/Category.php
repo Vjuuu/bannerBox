@@ -102,10 +102,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
 
         $data['grouped_data'] =  $this->category_model->category_group();
+    
         // var_dump($data['grouped_data']);
         // die();
 
         $this->load->view('admin/category_group',$data);
+    }
+
+    public function setCategotuOrder()
+    {
+        $input = json_decode(file_get_contents('php://input'), true);
+
+    if(empty($input) && !is_array($input))
+    {
+        $response = [
+            'status'=>'error',
+            'message' => 'invalid input data'
+        ];
+
+        echo json_encode($response);
+        return;
+    }
+    foreach($input as $category)
+    {
+        $this->category_model->set_category_order($category['categoryId'], $category['order']);
+        
+    }
+    $response = [
+        'status'=>'success',
+        'message'=>'Category Order index Update',
+    ];
+
+    echo json_encode($response);
     }
    
    

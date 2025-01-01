@@ -49,7 +49,7 @@
         <i class="fas fa-star me-2"></i>Popular
     </button>
 </nav>
-<div class="tab-content p-3" id="myTabContent">
+<div class="tab-content p-3 d-none" id="myTabContent">
     <div class="tab-pane fade show active" id="trending" role="tabpanel" aria-labelledby="trending-tab">
 
     </div>
@@ -58,55 +58,33 @@
     <!-- <div class="tab-pane fade" id="seasonal" role="tabpanel" aria-labelledby="seasonal-tab">Seasonal content</div> -->
 </div>
 <section class="popular-posters mb-4 p-3">
-    <?php foreach ($grouped_data as $category_name => $templates): ?>
-    <div class="mb-3 d-none">
-        <label for="" class="mb-3"><?=$category_name;?></label>
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <?php if (!empty($category_info['templates'])) { ?>
-                <div class="swiper-slide">
-                    <?php  foreach ($category_info['templates'] as $template) { ?>
-                    <a href="<?= base_url()?>view-poster/<?=$template['template_id']?>">
-                        <div class="card h-100 bg-dark text-white">
-                            <img src="<?=$template['template_thumbnail']?>" class="card-img-top btn-poster"
-                                alt="Template 1">
-                        </div>
-                    </a>
-                    <?php } ?>
-                </div>
-                <?php }?>
-            </div>
-        </div>
-    </div>
-    <?php endforeach; ?>
 
     <?php
         if (!empty($grouped_data)) { 
    
     foreach ($grouped_data as $category_name => $category_info) { ?>
-    <div class="category">
+    <div class="category mb-4">
         <h3><?=htmlspecialchars($category_name);?></h3>
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
                 <?php  if (!empty($category_info['templates'])) { ?>
-                
-                    <?php foreach ($category_info['templates'] as $template) {  ?>
-                   <div class="swiper-slide">
+
+                <?php foreach ($category_info['templates'] as $template) {  ?>
+                <div class="swiper-slide">
                     <a href="<?=base_url('view-poster/').htmlspecialchars($template['template_id'])?>">
                         <div class="card h-100 bg-dark text-white">
                             <img src="<?=htmlspecialchars($template['template_thumbnail'])?>" alt="Template Thumbnail"
                                 class="card-img-top btn-poster" />
                         </div>
                     </a>
-                    </div>
-                    <?php } ?>
-                
+                </div>
+                <?php } ?>
+
             </div>
         </div>
-    </div>
-    <?php } else { ?>
-    <p>No templates available in this category.</p>
-    <?php } ?>
+        <?php } else { ?>
+        <p>No templates available in this category.</p>
+        <?php } ?>
     </div>
     <?php } ?>
     </div>

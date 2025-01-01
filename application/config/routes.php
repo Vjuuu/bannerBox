@@ -62,6 +62,10 @@ $route['admin/category-group'] = 'admin/category/category_group';
 $route['admin/add-category'] = 'admin/category/add_category';
 $route['admin/delete-category'] = 'admin/category/delete_category';
 $route['get-category/(:num)'] = 'admin/category/get_category/$1';
+$route['set-category-order'] = 'admin/category/setCategotuOrder';
+$route['admin/users'] = 'admin/admin/get_users';
+
+
 // simple template 
 $route['admin/add-template'] = 'admin/template/add_template';
 $route['admin/all-templates'] = 'admin/template/all_template';

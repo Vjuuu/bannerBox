@@ -95,5 +95,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         } 
  }
+
+    public function get_users()
+    {
+        $this->load->model('User_model');
+        $data['users'] = $this->User_model->get_user();
+
+        $this->load->view('Admin/users',$data);
+    }
  }
 ?>

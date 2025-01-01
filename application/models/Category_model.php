@@ -43,18 +43,14 @@ class Category_model extends CI_Model
             $this->db->select('tbl_category.id as category_id, tbl_category.category_name, canvas_templates.id as template_id, canvas_templates.template_thumbnail');
             $this->db->from('canvas_templates');
             $this->db->join('tbl_category', 'tbl_category.id = canvas_templates.category', 'right'); // Inner Join
-
             if (!is_null($category_id)) {
                 $this->db->where('tbl_category.id', $category_id);
             }
-
-            $this->db->order_by('tbl_category.order_index', 'DESC'); // Default sorting by category ID
-
+            $this->db->order_by('tbl_category.order_index', 'ACEN'); // Default sorting by category ID
             $query = $this->db->get();
            
             if ($query) {
               $result = $query->result_array();
-              
               // Group templates by category
               $grouped_data = [];
               foreach ($result as $row) {
@@ -81,6 +77,13 @@ class Category_model extends CI_Model
           }
       
           return [];
+        }
+
+        public function set_category_order($category_id , $order_index)
+        {
+          //  $data =  array('order_index'=>$order_index);
+           $this->db->where('id',$category_id);
+           $this->db->update('tbl_category',array('order_index'=>$order_index));
         }
 
             
