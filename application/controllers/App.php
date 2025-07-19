@@ -130,5 +130,9 @@ class App extends CI_Controller {
 	{
 		$this->load->view('user_panel/404_page');
 	}
+	public function pro()
+	{
+		$this->load->view('Users/Pages/Pro');
+	}
 
 }

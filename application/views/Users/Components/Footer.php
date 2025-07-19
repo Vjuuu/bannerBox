@@ -6,7 +6,7 @@
                 class="small">Profile</span></a>
         <a class="nav-link d-flex flex-column align-items-center" href="<?=base_url()?>category"><i class="fa-solid fa-layer-group mb-1"></i><span
                 class="small">Category</span></a>
-        <a class="nav-link d-flex flex-column align-items-center" href="#"><i class="fa-solid fa-crown mb-1 "></i><span
+        <a class="nav-link d-flex flex-column align-items-center" href="<?=base_url()?>pro"><i class="fa-solid fa-crown mb-1 "></i><span
                 class="small">Pro</span></a>
 
     </div>

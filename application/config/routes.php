@@ -95,6 +95,8 @@ $route['home'] = 'app/index';
 $route['view-poster/(:num)'] = 'app/view_poster/$1';
 $route['category'] = 'app/category/';
 $route['banner-by-category/(:num)'] = 'app/banner_by_category/$1';
+$route['pro'] = 'app/pro';
+
 
 
 // error_pages 
@@ -110,4 +112,9 @@ $route['api/banners'] = 'api/banner/index';
 $route['api/banners/(:num)'] = 'api/banner/show/$1'; 
 $route['api/canvas-template'] = 'api/canvas_template/index'; 
 $route['api/add_canvas_template'] = 'api/canvas_template/add_template'; 
+
+
+// api v1 
+$route['v1/api/poster'] = 'api/Poster_templates/index'; 
+
 

@@ -18,8 +18,10 @@ class Canvas_template_model extends CI_Model
         }
         else
         {
+            $this->db->select('id , template_name , template_thumbnail');
             $query = $this->db->get('canvas_templates');
         }
+        
         return $query->result();
     }
     public function update_template($id,$data)

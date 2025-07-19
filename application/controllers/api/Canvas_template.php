@@ -48,6 +48,7 @@ class Canvas_template extends RestController
             // Insert data into the database
             $data = [
                 'template_name' => $templateName,
+                'template_name' => $templateName,
                 'category' => $category,
                 'template_json' => $canvasData
             ];
