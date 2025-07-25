@@ -118,11 +118,13 @@ $route['api/add_canvas_template'] = 'api/canvas_template/add_template';
 
 // Google Login → POST (returns JWT token)
 $route['v1/api/user/google_login'] = 'api/user/google_login';
-$route['v1/api/user/login'] = 'api/user/login';
-
+$route['v1/api/user/login'] = 'api/user/login'; 
 // Get Profile → GET (requires JWT token)
 $route['v1/api/user/profile'] = 'api/user/profile';
 // Update Profile → POST (requires JWT token)
 $route['v1/api/user/update_profile'] = 'api/user/update_profile';
-$route['v1/api/poster'] = 'api/Poster_templates/index'; 
+$route['v1/api/poster'] = 'api/Poster_templates/index';
+
+$route['test'] = 'test/index'; 
+
 

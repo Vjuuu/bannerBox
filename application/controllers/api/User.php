@@ -4,65 +4,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-class User extends CI_Controller {
+class User extends MY_Controller {
 
-    private $jwt_key = "MY_SUPER_SECRET_KEY"; // CHANGE THIS
+   
 
     public function __construct() {
-
-        // CORS headers
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-        header('Access-Control-Allow-Headers: Content-Type, Authorization');
-
-        // Handle preflight OPTIONS request
-        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-            http_response_code(200);
-            exit(0);
-        }
-
         parent::__construct();
         $this->load->model('User_model');
         header('Content-Type: application/json');
     }
 
-    /**
-     * ✅ Generate JWT Token
-     */
-    private function generate_token($user_id) {
-        $payload = [
-            "iss" => base_url(),       // Issuer
-            "iat" => time(),           // Issued at
-            "exp" => time() + 86400,   // Expire in 24 hours
-            "user_id" => $user_id
-        ];
-
-        return JWT::encode($payload, $this->jwt_key, 'HS256');
-    }
-
-    /**
-     * ✅ Verify JWT Token
-     */
-    private function verify_token() {
-        $headers = apache_request_headers();
-        if (!isset($headers['Authorization'])) return false;
-
-        $auth = str_replace('Bearer ', '', $headers['Authorization']);
-
-        try {
-            $decoded = JWT::decode($auth, new Key($this->jwt_key, 'HS256'));
-            return (array)$decoded; // return decoded payload
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-
+   
     /**
      * ✅ Google Login - Returns JWT token
      */
     public function google_login() {
         $input = json_decode(file_get_contents('php://input'), true);
-
         $google_id    = $input['google_id'];
         $google_email = $input['email'];
         $google_name  = $input['name'];
